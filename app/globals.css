@@ -6,6 +6,9 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --glow-color: hsl(0, 53%, 66%);
+  --border-color: #d98181;
+  --vRed: #c03636;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,3 +28,330 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #848484 #292929;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #292929;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #848484;
+  border-radius: 10px;
+  border: 3px none #ffffff;
+}
+
+/* Locking Border */
+.locking-border {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.locking-border::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background-image: linear-gradient(to bottom, var(--vRed) 0%, rgba(212, 79, 79, 0) 100%);
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade In */
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  opacity: 0;
+  animation: fadeInAnimation 1.5s forwards;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+.pulse {
+  animation: pulse 4s linear infinite;
+}
+
+/* Credits Background */
+.bgValo {
+  background: linear-gradient(180deg, rgb(22, 0, 0) 0%, rgb(54, 1, 1) 100%);
+}
+
+/* Home Icon */
+.homeIcon {
+  box-shadow: 0 0 3px 2px var(--vRed), 0 0 3px 1px var(--border-color);
+  border-radius: 5px;
+  perspective: 2rem;
+}
+
+.homeIcon:hover {
+  scale: 0.9;
+}
+
+.homeIcon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  filter: blur(1rem);
+  transform: translateY(100%) rotateX(95deg) scale(1, 0.35);
+  background: var(--border-color);
+  pointer-events: none;
+}
+
+/* Credits Text */
+.creditsText {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 0.7rem;
+  color: var(--vRed);
+  cursor: pointer;
+  border: 0.15rem solid var(--glow-color);
+  border-radius: 0.45rem;
+  background: none;
+  perspective: 2rem;
+  font-family: sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+
+  box-shadow: inset 0px 0px 8px 3px var(--vRed), 0px 0px 8px 3px var(--vRed);
+  animation: border-flicker 2s linear infinite;
+
+  text-shadow: 0 0 3px #944c4c, 0 0 1px var(--border-color);
+  animation: text-flicker 3s linear infinite;
+}
+
+.creditsText svg {
+  filter: drop-shadow(0 0 3px #944c4c);
+}
+
+.creditsText::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  filter: blur(1rem);
+  transform: translateY(100%) rotateX(95deg) scale(1, 0.35);
+  background: var(--border-color);
+  pointer-events: none;
+}
+
+.creditsText::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: -1;
+  background-color: var(--glow-color);
+  box-shadow: 0 0 2em 0.2em var(--glow-color);
+  transition: opacity 100ms linear;
+}
+
+.creditsText:hover,
+.creditsText:hover svg {
+  color: var(--vRed);
+  text-shadow: none;
+  animation: none;
+  filter: none;
+}
+
+.creditsText:hover:before {
+  filter: blur(1.5em);
+  opacity: 1;
+}
+
+.creditsText:hover:after {
+  opacity: 1;
+}
+
+@keyframes border-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 1;
+  }
+  4% {
+    opacity: 0.1;
+  }
+  8% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.1;
+  }
+  9% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  72% {
+    opacity: 0.2;
+  }
+  77% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+/* ---- VALORANT LOGO ---- */
+
+/* Left */
+.vBorder path {
+  stroke-dasharray: 1300;
+  stroke-dashoffset: 0;
+  animation: draw 4s ease-in-out infinite;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  50% {
+    stroke-dashoffset: 1300;
+    opacity: 0.5;
+  }
+  100% {
+    stroke-dashoffset: 2600;
+    opacity: 1;
+  }
+}
+
+/* Right */
+.vBorderRight path {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 0;
+
+  animation: drawRight 4s ease-in-out infinite;
+}
+
+@keyframes drawRight {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  50% {
+    stroke-dashoffset: 900;
+    opacity: 0.5;
+  }
+  100% {
+    stroke-dashoffset: 1800;   
+    opacity: 1;
+  }
+}
+
+/* Loader */
+.loading path {
+  stroke-dasharray: 190;
+  stroke-dashoffset: 0;
+    /* animation: dotted 4s linear infinite; */
+  /* animation: loader 1s linear infinite; */
+}
+
+@keyframes loader {
+  0% {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 200;
+  }
+  80% {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 460;
+  }
+  100% {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dotted {
+  from {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 400;
+  }
+}
+
